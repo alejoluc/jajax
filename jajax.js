@@ -25,16 +25,19 @@ var jajax = (function(){
         return xhr;
     }
 
-    function ajax(options){
-
+    function ajax(url, options){
+        options.url = url;
+        var xhr = requestObjectFactory();
     }
 
-    function get(options){
-
+    function get(url, options){
+        options.method = 'GET';
+        ajax(url, options);
     }
 
-    function post(options){
-
+    function post(url, options){
+        options.method = 'POST';
+        ajax(url, options);
     }
 
     var Request = (function(){
@@ -45,20 +48,18 @@ var jajax = (function(){
          * @param {String} method **GET** or **POST**. Defaults to **GET**
          */
         function Request(method){
-            this.method = (typeof method !== 'undefined') ? method : 'GET';
+            this.setRequestMethod((typeof method !== 'undefined') ? method : 'GET');
             this.parameters = {};
 
             this.onSuccess = null;
             this.onError = null;
             this.onComplete = null;
-
-            this.requestObject = requestObjectFactory();
         }
         /**
          * @method setRequestMethod
          * @param {String} method **GET** or **POST**
          */
-        Request.prototype.setRequestMethod(method){
+        Request.prototype.setRequestMethod = function(method){
             this.method = method;
         }
 
@@ -68,7 +69,7 @@ var jajax = (function(){
          * @method setParameters
          * @param {Object} parameters
          */
-        Request.prototype.setParameters(parameters){
+        Request.prototype.setParameters = function(parameters){
             this.parameters = parameters;
         }
         /**
@@ -111,4 +112,8 @@ var jajax = (function(){
     module.post = post;
     module.Request = Request;
     return module;
-});
+}());
+
+if (typeof module !== 'undefined' && module.exports) {
+    exports = module.exports = jajax;
+}
