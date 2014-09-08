@@ -83,14 +83,17 @@ var jajax = (function(){
         xhr.send(parameters);
     }
 
-    function get(url, options, onSuccessCallback){
+    function get(url, onSuccessCallback){
+        var options = {};
         options.method = 'GET';
         options.onSuccess = onSuccessCallback;
         ajax(url, options);
     }
 
-    function post(url, options, onSuccessCallback){
+    function post(url, data, onSuccessCallback){
+        var options = {};
         options.method = 'POST';
+        options.parameters = data;
         options.onSuccess = onSuccessCallback;
         ajax(url, options);
     }
