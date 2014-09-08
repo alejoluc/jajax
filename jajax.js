@@ -74,11 +74,7 @@ var jajax = (function(){
 
         var parameters = null;
         if (options.method === 'POST') {
-            if (options.fileUploading === false) {
-                parameters = options.parameters;
-            } else {
-                parameters = getParameterString(options.parameters);
-            }
+            parameters = getParameterString(options.parameters);
         }
         xhr.send(parameters);
     }
