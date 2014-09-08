@@ -28,18 +28,37 @@ var jajax = (function(){
     function getDefaultOptions(){
         return {
             async: true,
-            parameters: null
+            parameters: null,
+            fileUploading: false
         };
+    }
+
+    function getParameterString(parameters){
+        var parameterString = "";
+        var parameterKeys = Object.keys(parameters);
+        for (var i = 0; i < parameterKeys.length; i++){
+            var parameterKey = parameterKeys[i];
+            parameterString += parameterKey + "=" + parameters[parameterKey];
+            if (i < (parameterKeys.length - 1)){
+                parameterString += "&";
+            }
+        }
+        return parameterString;
     }
 
     function ajax(url, options){
         options = _extend(getDefaultOptions(), options);
+        options.method = options.method.toUpperCase();
 
         var xhr = requestObjectFactory();
         xhr.open(options.method, url, options.async);
 
         if (options.method === 'POST') {
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            if (options.fileUploading === true) {
+                xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+            } else {
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            }
         }
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4){
@@ -52,7 +71,16 @@ var jajax = (function(){
                 options.onComplete(xhr.responseText, xhr.statusText, xhr);
             }
         };
-        xhr.send(options.parameters);
+
+        var parameters = null;
+        if (options.method === 'POST') {
+            if (options.fileUploading === false) {
+                parameters = options.parameters;
+            } else {
+                parameters = getParameterString(options.parameters);
+            }
+        }
+        xhr.send(parameters);
     }
 
     function get(url, options, onSuccessCallback){
@@ -74,14 +102,27 @@ var jajax = (function(){
          * @constructor
          * @param {String} method **GET** or **POST**. Defaults to **GET**
          */
-        function Request(method){
+        function Request(url, method){
+            this.setRequestURL(url);
             this.setRequestMethod((typeof method !== 'undefined') ? method : 'GET');
             this.parameters = null;
 
-            this.onSuccess = function(){};
-            this.onError = function(){};
-            this.onComplete = function(){};
+            this.fileUploading = false;
+            this.async = true;
+
+            this.callbackOnSuccess = function(){};
+            this.callbackOnError = function(){};
+            this.callbackOnComplete = function(){};
         }
+
+        /**
+         * @method setRequestURL
+         * @param {String} url
+         */
+        Request.prototype.setRequestURL = function(url){
+            this.url = url;
+        }
+
         /**
          * @method setRequestMethod
          * @param {String} method **GET** or **POST**
@@ -91,21 +132,38 @@ var jajax = (function(){
         }
 
         /**
-         * Sets the request parameters. If the request method is **GET** and the request URL already
-         * contains parameters, the parameters passed to this function will be appended at the end.
+         * Sets the request parameters. If the request method is **GET** this has no effect
          * @method setParameters
          * @param {Object} parameters
          */
         Request.prototype.setParameters = function(parameters){
             this.parameters = parameters;
         }
+
+        /**
+         * Sets whether the form should be sent with Content-Type as multipart/form-data
+         * @method setFileUploading
+         * @param {Boolean} uploading
+         */
+        Request.prototype.setFileUploading = function(uploading){
+            this.fileUploading = uploading;
+        }
+
+        /**
+         * Sets whether the request should be an asynchronous request or not
+         * @param {Boolean} async
+         */
+         Request.prototype.setAsync = function(async){
+            this.async = async;
+         }
+
         /**
          * Sets the callback to be executed if the request succeeds
          * @method onSuccess
          * @param {Function} callbackFunction
          */
         Request.prototype.onSuccess = function(callbackFunction){
-            this.onSuccess = callbackFunction;
+            this.callbackOnSuccess = callbackFunction;
         }
         /**
          * Sets the callback to be executed if the request fails
@@ -113,7 +171,7 @@ var jajax = (function(){
          * @param {Function} callbackFunction
          */
         Request.prototype.onError = function(callbackFunction){
-            this.onError = callbackFunction;
+            this.callbackOnError = callbackFunction;
         }
         /**
          * Sets the callback to be executed right after **success** or **error**
@@ -121,7 +179,7 @@ var jajax = (function(){
          * @param {Function} callbackFunction
          */
         Request.prototype.onComplete = function(callbackFunction){
-            this.onComplete = callbackFunction;
+            this.callbackOnComplete = callbackFunction;
         }
         /**
          * Executes the Request
@@ -129,6 +187,16 @@ var jajax = (function(){
          */
          Request.prototype.execute = function(){
             // Calls the ajax() function
+            var options = {
+                method: this.method,
+                parameters: this.parameters,
+                fileUploading: this.fileUploading,
+                async: this.async,
+                onSuccess: this.callbackOnSuccess,
+                onError: this.callbackOnError,
+                onComplete: this.callbackOnComplete
+            };
+            ajax(this.url, options);
          }
         return Request;
     }());
