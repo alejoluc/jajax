@@ -1,5 +1,5 @@
 var jajax = (function(){
-
+    'use strict';
     function _extend(destination, source){
         for (var member in source){
             if (source.hasOwnProperty(member)){
@@ -10,7 +10,19 @@ var jajax = (function(){
     }
 
     function requestObjectFactory(){
+        var xhr;
+        if (window.ActiveXObject) {
+            try {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch(e) {
+                alert(e.message);
+                xhr = null;
+            }
+        } else {
+            xhr = new XMLHttpRequest();
+        }
 
+        return xhr;
     }
 
     function ajax(options){
