@@ -45,11 +45,11 @@ var jajax = (function(){
             if (xhr.readyState === 4){
                 console.log(xhr);
                 if (xhr.status === 200) {
-                    options.onSuccess(xhr.responseText, xhr.statusText);
+                    options.onSuccess(xhr.responseText, xhr.statusText, xhr);
                 } else {
-                    options.onError(xhr.responseText, xhr.statusText);
+                    options.onError(xhr.responseText, xhr.statusText, xhr);
                 }
-                options.onComplete(xhr.responseText, xhr.statusText);
+                options.onComplete(xhr.responseText, xhr.statusText, xhr);
             }
         };
         xhr.send(options.parameters);
