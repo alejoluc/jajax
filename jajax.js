@@ -25,18 +25,45 @@ var jajax = (function(){
         return xhr;
     }
 
-    function ajax(url, options){
-        options.url = url;
-        var xhr = requestObjectFactory();
+    function getDefaultOptions(){
+        return {
+            async: true,
+            parameters: null
+        };
     }
 
-    function get(url, options){
+    function ajax(url, options){
+        options = _extend(getDefaultOptions(), options);
+
+        var xhr = requestObjectFactory();
+        xhr.open(options.method, url, options.async);
+
+        if (options.method === 'POST') {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4){
+                console.log(xhr);
+                if (xhr.status === 200) {
+                    options.onSuccess(xhr.responseText, xhr.statusText);
+                } else {
+                    options.onError(xhr.responseText, xhr.statusText);
+                }
+                options.onComplete(xhr.responseText, xhr.statusText);
+            }
+        };
+        xhr.send(options.parameters);
+    }
+
+    function get(url, options, onSuccessCallback){
         options.method = 'GET';
+        options.onSuccess = onSuccessCallback;
         ajax(url, options);
     }
 
-    function post(url, options){
+    function post(url, options, onSuccessCallback){
         options.method = 'POST';
+        options.onSuccess = onSuccessCallback;
         ajax(url, options);
     }
 
@@ -49,11 +76,11 @@ var jajax = (function(){
          */
         function Request(method){
             this.setRequestMethod((typeof method !== 'undefined') ? method : 'GET');
-            this.parameters = {};
+            this.parameters = null;
 
-            this.onSuccess = null;
-            this.onError = null;
-            this.onComplete = null;
+            this.onSuccess = function(){};
+            this.onError = function(){};
+            this.onComplete = function(){};
         }
         /**
          * @method setRequestMethod
