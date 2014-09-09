@@ -34,7 +34,7 @@ The no Bullshit, Just Ajax library
 
 All options are set to their default value.
 
-**Note**: the *parameters* options is only used in POST requests. It should be a *{key:'value', ...}* object in that case.
+**Note**: the *parameters* option is only used in POST requests. It should be a *{key:'value', ...}* object in that case.
 
     var options = {
         method: 'GET',
