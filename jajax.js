@@ -155,8 +155,8 @@ var jajax = (function(){
          * @param {String} [method] **GET** or **POST**. Defaults to **GET**
          */
         function Request(url, method){
-            this.setRequestURL(url);
-            this.setRequestMethod((typeof method !== 'undefined') ? method : 'GET');
+            this.setURL(url);
+            this.setMethod((typeof method !== 'undefined') ? method : 'GET');
 
             var defaultOptions = getDefaultOptions();
 

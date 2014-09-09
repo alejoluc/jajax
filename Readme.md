@@ -77,8 +77,8 @@ All options are set to their default value.
     req.setURL('new_destination.php');
     req.setMethod('POST');
     req.setParameters({
-        param1: true,
-        param2: false
+        id: 5,
+        fetchMenus: true
     });
     req.setFileUploading(false); //default value, no need to call it
     req.setAsync(true); //default value, no need to call it
