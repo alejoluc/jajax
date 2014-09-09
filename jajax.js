@@ -1,5 +1,21 @@
 var jajax = (function(){
     'use strict';
+
+    //Polyfill for Object.keys
+    if (!Object.keys) {
+      Object.keys = function(obj) {
+        var keys = [];
+
+        for (var i in obj) {
+          if (obj.hasOwnProperty(i)) {
+            keys.push(i);
+          }
+        }
+
+        return keys;
+      };
+    }
+
     function _extend(destination, source){
         for (var member in source){
             if (source.hasOwnProperty(member)){
