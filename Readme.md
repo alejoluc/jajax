@@ -52,7 +52,7 @@ All options are set to their default value
 
     var request = new jajax.Request('destination.php'); // GET is the default
     request.onComplete(function(responseText, statusText, xhrObject){
-        console.log('Te server responded: ' + responseText);
+        console.log('The server responded: ' + responseText);
     });
     request.execute();
 
