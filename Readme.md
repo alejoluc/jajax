@@ -111,3 +111,15 @@ req.onComplete(function(responseText, statusText, xhrObject){
 });
 req.execute();
 ```
+
+## CommonJS
+
+If you like to modularize your code and are using CommonJS to do so (via browserify, for example), you
+can easily use jajax too! Just do:
+
+```javascript
+var jajax = require('./jajax.js');
+jajax.get('destination.php', function(res){
+    console.log('The server responded: ' + res);
+})
+```
