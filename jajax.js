@@ -209,6 +209,13 @@ var jajax = (function(){
             this.async = async;
          }
 
+        /**
+         * Sets the callback to be executed before sending the request. Its useful if modifications
+         * to the xhrObject are needed, for example, to set a header.
+         * The xhrObject of the request to be sent is passed as the first argument to the callback
+         * @method beforeSend
+         * @param {Function} callbackFunction
+         */
          Request.prototype.beforeSend = function(callbackFunction){
             this.callbackBeforeSend = callbackFunction;
          }
