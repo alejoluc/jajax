@@ -253,7 +253,6 @@ var jajax = (function(){
          * @method execute
          */
          Request.prototype.execute = function(){
-            // Calls the ajax() function
             var options = {
                 method: this.method,
                 parameters: this.parameters,
