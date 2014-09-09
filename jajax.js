@@ -10,18 +10,16 @@ var jajax = (function(){
     }
 
     function requestObjectFactory(){
-        var xhr;
-        if (window.ActiveXObject) {
-            try {
-                xhr = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch(e) {
-                alert(e.message);
-                xhr = null;
-            }
-        } else {
+        var xhr = null;
+        if (window.XMLHttpRequest){
             xhr = new XMLHttpRequest();
+        } else {
+            if (window.ActiveXObject) {
+                try {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch(e) {}
+            }
         }
-
         return xhr;
     }
 
