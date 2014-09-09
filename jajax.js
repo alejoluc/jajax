@@ -90,7 +90,6 @@ var jajax = (function(){
         }
         xhr.onreadystatechange = function(){
             if (xhr.readyState === 4){
-                console.log(xhr);
                 if (xhr.status === 200) {
                     options.onSuccess(xhr.responseText, xhr.statusText, xhr);
                 } else {
