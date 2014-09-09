@@ -33,7 +33,7 @@ The no Bullshit, Just Ajax library
         hola: 'mundo'
     };
     jajax.post('destination.php', postFields, function(responseText, statusText, xhrObject){
-        console.log('Te server responded: ' + responseText);
+        console.log('The server responded: ' + responseText);
     });
 
 ## Using the Object Oriented API to make a post request
@@ -45,6 +45,6 @@ The no Bullshit, Just Ajax library
     };
     request.setParameters(postFields);
     request.onComplete(function(responseText, statusText, xhrObject){
-        console.log('Te server responded: ' + responseText);
+        console.log('The server responded: ' + responseText);
     });
     request.execute();
