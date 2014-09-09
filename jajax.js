@@ -43,7 +43,7 @@ var jajax = (function(){
         var parameterKeys = Object.keys(parameters);
         for (var i = 0; i < parameterKeys.length; i++){
             var parameterKey = parameterKeys[i];
-            parameterString += parameterKey + "=" + parameters[parameterKey];
+            parameterString += parameterKey + "=" + encodeURIComponent(parameters[parameterKey]);
             if (i < (parameterKeys.length - 1)){
                 parameterString += "&";
             }
