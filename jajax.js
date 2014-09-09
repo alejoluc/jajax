@@ -29,7 +29,11 @@ var jajax = (function(){
         return {
             async: true,
             parameters: null,
-            fileUploading: false
+            fileUploading: false,
+            beforeSend: function(){},
+            onSuccess: function(){},
+            onErrror: function(){},
+            onComplete: function(){}
         };
     }
 
@@ -63,6 +67,7 @@ var jajax = (function(){
       *         method: 'POST',
       *         fileUploading: false,
       *         parameters: {id:4, fetchMenus:false},
+      *         beforeSend: fundction(xhrObject){},
       *         onSuccess: function(responseText, statusText, xhrObject){},
       *         onError: function(responseText, statusText, xhrObject){},
       *         onSuccess: function(responseText, statusText, xhrObject){}
@@ -99,6 +104,7 @@ var jajax = (function(){
         if (options.method === 'POST' && options.parameters !== null) {
             parameters = getParameterString(options.parameters);
         }
+        options.beforeSend(xhr);
         xhr.send(parameters);
     }
 
@@ -156,6 +162,7 @@ var jajax = (function(){
             this.fileUploading = false;
             this.async = true;
 
+            this.callbackBeforeSend = function(){};
             this.callbackOnSuccess = function(){};
             this.callbackOnError = function(){};
             this.callbackOnComplete = function(){};
@@ -203,6 +210,10 @@ var jajax = (function(){
             this.async = async;
          }
 
+         Request.prototype.beforeSend = function(callbackFunction){
+            this.callbackBeforeSend = callbackFunction;
+         }
+
         /**
          * Sets the callback to be executed if the request succeeds
          * @method onSuccess
@@ -238,6 +249,7 @@ var jajax = (function(){
                 parameters: this.parameters,
                 fileUploading: this.fileUploading,
                 async: this.async,
+                beforeSend: this.callbackBeforeSend,
                 onSuccess: this.callbackOnSuccess,
                 onError: this.callbackOnError,
                 onComplete: this.callbackOnComplete
