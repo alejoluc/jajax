@@ -2,6 +2,8 @@
 
 The no Bullshit, Just Ajax library
 
+MIT License
+
 # Features
 
 * The minified version is ~3kb
