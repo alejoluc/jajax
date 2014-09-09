@@ -6,12 +6,14 @@ MIT License
 
 # Features
 
-* Should work with all browsers, even old IE versions
+* Works in all browsers, even old IE versions (*)
 * The minified version is ~3kb
 * Supports GET and POST
 * Both Procedural and Object Oriented API
 * Shorthand functions for quick and dirty GET and POST requests
 * CommonJS complaint module (in case you want to use the library with browserify)
+
+(*) I tested it, but please submit an issue if this is not the case
 
 # Examples
 
