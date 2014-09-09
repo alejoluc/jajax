@@ -4,7 +4,7 @@ The no Bullshit, Just Ajax library
 
 # Features
 
-* The minified version is ~4kb
+* The minified version is ~3kb
 * Supports GET and POST
 * Both Procedural and Object Oriented API
 * Shorthand functions for quick and dirty GET and POST requests
