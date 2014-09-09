@@ -38,7 +38,7 @@ All options are set to their default value
         method: 'GET',
         async: true,
         fileUploading: false,
-        parameters: null,
+        parameters: null, // Used only for POST requests. In that case, it should be an object.
         beforeSend: function(xhrObject){},
         onSuccess: function(responseText, statusText, xhrObject){},
         onError: function(responseText, statusText, xhrObject){},
@@ -68,3 +68,29 @@ All options are set to their default value
         console.log('The server responded: ' + responseText);
     });
     request.execute();
+
+### A custom POST request with all the possible options
+
+    var req = new jajax.Request('destination.php', 'POST'); //Both arguments are optional
+    req.setURL('new_destination.php');
+    req.setMethod('POST');
+    req.setParameters({
+        param1: true,
+        param2: false
+    });
+    req.setFileUploading(false); //default value, no need to call it
+    req.setAsync(true); //default value, no need to call it
+    req.beforeSend(function(xhrObject){
+        // This function will be fired right before sending the request.
+        // Useful if you need to perform operations on the xhrObject, like sending custom headers
+    });
+    req.onSuccess(function(responseText, statusText, xhrObject){
+
+    });
+    req.onError(function(responseText, statusText, xhrObject){
+
+    });
+    req.onComplete(function(responseText, statusText, xhrObject){
+        // Fired immediately after onSuccess or onError
+    });
+    req.execute();
