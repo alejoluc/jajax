@@ -30,6 +30,20 @@ The no Bullshit, Just Ajax library
         console.log('The server responded: ' + responseText);
     });
 
+### A custom GET request with all the possible options
+
+    var options = {
+        method: 'GET', //default
+        async: true, //default
+        fileUploading: false, //default
+        parameters: null, //default, used only for POST requests
+        beforeSend: function(xhrObject){}, //fired before sending the request, useful for modifying the xhr Object
+        onSuccess: function(responseText, statusText, xhrObject){}, //fired if the request succeeds
+        onError: function(responseText, statusText, xhrObject){}, //fired if it fails
+        onComplete: function(responseText, statusText, xhrObject){}, //fired right after onSuccess or onError
+    };
+    jajax.ajax('destination.php', options);
+
 ## Object Oriented API
 
 ### GET request
