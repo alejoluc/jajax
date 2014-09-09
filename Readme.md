@@ -9,8 +9,6 @@ The no Bullshit, Just Ajax library
 * Both Procedural and Object Oriented API
 * Shorthand functions for quick and dirty GET and POST requests
 * CommonJS complaint module (in case you want to use the library with browserify)
-* Supports File Uploading
-* Fully Documented
 
 # Examples
 
