@@ -32,15 +32,17 @@ The no Bullshit, Just Ajax library
 
 ### A custom GET request with all the possible options
 
+All options are set to their default value
+
     var options = {
-        method: 'GET', //default
-        async: true, //default
-        fileUploading: false, //default
-        parameters: null, //default, used only for POST requests
-        beforeSend: function(xhrObject){}, //fired before sending the request, useful for modifying the xhr Object
-        onSuccess: function(responseText, statusText, xhrObject){}, //fired if the request succeeds
-        onError: function(responseText, statusText, xhrObject){}, //fired if it fails
-        onComplete: function(responseText, statusText, xhrObject){}, //fired right after onSuccess or onError
+        method: 'GET',
+        async: true,
+        fileUploading: false,
+        parameters: null,
+        beforeSend: function(xhrObject){},
+        onSuccess: function(responseText, statusText, xhrObject){},
+        onError: function(responseText, statusText, xhrObject){},
+        onComplete: function(responseText, statusText, xhrObject){}
     };
     jajax.ajax('destination.php', options);
 
