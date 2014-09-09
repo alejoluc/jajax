@@ -12,21 +12,15 @@ The no Bullshit, Just Ajax library
 
 # Examples
 
-## Using the procedural API to make a get request
+## Procedural API
+
+### Quick and dirty GET request
 
     jajax.get('destination.php', function(responseText, statusText, xhrObject){
         console.log('The server responded: ' + responseText);
     });
 
-## Using the Object Oriented API to make a get request
-
-    var request = new jajax.Request('destination.php'); // GET is the default
-    request.onComplete(function(responseText, statusText, xhrObject){
-        console.log('Te server responded: ' + responseText);
-    });
-    request.execute();
-
-## Using the procedural API to make a post request
+### Quick and dirty POST request
 
     var postFields = {
         hello: 'world',
@@ -36,7 +30,17 @@ The no Bullshit, Just Ajax library
         console.log('The server responded: ' + responseText);
     });
 
-## Using the Object Oriented API to make a post request
+## Object Oriented API
+
+### GET request
+
+    var request = new jajax.Request('destination.php'); // GET is the default
+    request.onComplete(function(responseText, statusText, xhrObject){
+        console.log('Te server responded: ' + responseText);
+    });
+    request.execute();
+
+### POST request
 
     var request = new jajax.Request('destination.php', 'POST');
     var postFields = {
