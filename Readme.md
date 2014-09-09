@@ -32,13 +32,15 @@ The no Bullshit, Just Ajax library
 
 ### A custom GET request with all the possible options
 
-All options are set to their default value
+All options are set to their default value.
+
+**Note**: the *parameters* options is only used in POST requests. It should be a *{key:'value', ...}* object in that case.
 
     var options = {
         method: 'GET',
         async: true,
         fileUploading: false,
-        parameters: null, // Used only for POST requests. In that case, it should be an object.
+        parameters: null,
         beforeSend: function(xhrObject){},
         onSuccess: function(responseText, statusText, xhrObject){},
         onError: function(responseText, statusText, xhrObject){},
