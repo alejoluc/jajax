@@ -172,18 +172,18 @@ var jajax = (function(){
         }
 
         /**
-         * @method setRequestURL
+         * @method setURL
          * @param {String} url
          */
-        Request.prototype.setRequestURL = function(url){
+        Request.prototype.setURL = function(url){
             this.url = url;
         }
 
         /**
-         * @method setRequestMethod
+         * @method setMethod
          * @param {String} method **GET** or **POST**
          */
-        Request.prototype.setRequestMethod = function(method){
+        Request.prototype.setMethod = function(method){
             this.method = method;
         }
 
