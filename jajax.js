@@ -27,6 +27,7 @@ var jajax = (function(){
 
     function getDefaultOptions(){
         return {
+            method: 'GET',
             async: true,
             parameters: null,
             fileUploading: false,
@@ -37,7 +38,7 @@ var jajax = (function(){
         };
     }
 
-    function getParameterString(parameters){
+    function makeParameterString(parameters){
         var parameterString = "";
         var parameterKeys = Object.keys(parameters);
         for (var i = 0; i < parameterKeys.length; i++){
@@ -101,7 +102,7 @@ var jajax = (function(){
 
         var parameters = null;
         if (options.method === 'POST' && options.parameters !== null) {
-            parameters = getParameterString(options.parameters);
+            parameters = makeParameterString(options.parameters);
         }
         options.beforeSend(xhr);
         xhr.send(parameters);
@@ -156,15 +157,18 @@ var jajax = (function(){
         function Request(url, method){
             this.setRequestURL(url);
             this.setRequestMethod((typeof method !== 'undefined') ? method : 'GET');
-            this.parameters = null;
 
-            this.fileUploading = false;
-            this.async = true;
+            var defaultOptions = getDefaultOptions();
 
-            this.callbackBeforeSend = function(){};
-            this.callbackOnSuccess = function(){};
-            this.callbackOnError = function(){};
-            this.callbackOnComplete = function(){};
+            this.parameters = defaultOptions.parameters;
+
+            this.fileUploading = defaultOptions.fileUploading;
+            this.async = defaultOptions.async;
+
+            this.callbackBeforeSend = defaultOptions.beforeSend;
+            this.callbackOnSuccess = defaultOptions.onSuccess;
+            this.callbackOnError = defaultOptions.onError;
+            this.callbackOnComplete = defaultOptions.onComplete;
         }
 
         /**
