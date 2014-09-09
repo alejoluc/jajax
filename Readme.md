@@ -6,6 +6,7 @@ MIT License
 
 # Features
 
+* Compatible with all browsers, including old IE versions
 * The minified version is ~3kb
 * Supports GET and POST
 * Both Procedural and Object Oriented API
