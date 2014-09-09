@@ -46,6 +46,29 @@ var jajax = (function(){
         return parameterString;
     }
 
+    /**
+     * @class jajax
+     * @static
+     */
+
+     /**
+      * Creates a request object and sends the request
+      * @method ajax
+      * @param {String} url
+      * @param {Object} options
+      * @example
+      *
+      *     var options = {
+      *         async: true,
+      *         method: 'POST',
+      *         fileUploading: false,
+      *         parameters: {id:4, fetchMenus:false},
+      *         onSuccess: function(responseText, statusText, xhrObject){},
+      *         onError: function(responseText, statusText, xhrObject){},
+      *         onSuccess: function(responseText, statusText, xhrObject){}
+      *     }
+      *     jajax.ajax('destination.php', options);
+      */
     function ajax(url, options){
         options = _extend(getDefaultOptions(), options);
         options.method = options.method.toUpperCase();
@@ -73,12 +96,23 @@ var jajax = (function(){
         };
 
         var parameters = null;
-        if (options.method === 'POST') {
+        if (options.method === 'POST' && options.parameters !== null) {
             parameters = getParameterString(options.parameters);
         }
         xhr.send(parameters);
     }
 
+    /**
+     * Shorthand GET method
+     * @method get
+     * @param {String} url
+     * @param {Function} onSuccessCallback
+     * @example
+     *
+     *     jajax.get('destination.php', function(responseText, statusText, xhrObject){
+     *         console.log('Server response: ' + responseText);
+     *     });
+     */
     function get(url, onSuccessCallback){
         var options = {};
         options.method = 'GET';
@@ -86,10 +120,22 @@ var jajax = (function(){
         ajax(url, options);
     }
 
+    /**
+     * Shorthand POST method
+     * @method post
+     * @param {String} url
+     * @param {Object|Null} data
+     * @param {Function} onSuccessCallback
+     * @example
+     *
+     *     jajax.post('destination.php', {id:4,fetchMenus:true}, function(responseText, statusText, xhrObject){
+     *         console.log('Server response: ' + responseText);
+     *     });
+     */
     function post(url, data, onSuccessCallback){
         var options = {};
         options.method = 'POST';
-        options.parameters = data;
+        options.parameters = (typeof data !== 'undefined') ? data : null;
         options.onSuccess = onSuccessCallback;
         ajax(url, options);
     }
@@ -97,9 +143,10 @@ var jajax = (function(){
     var Request = (function(){
         /**
          * A Request object.
-         * @class Request
+         * @class jajax.Request
          * @constructor
-         * @param {String} method **GET** or **POST**. Defaults to **GET**
+         * @param {String} [url]
+         * @param {String} [method] **GET** or **POST**. Defaults to **GET**
          */
         function Request(url, method){
             this.setRequestURL(url);
