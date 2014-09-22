@@ -98,7 +98,7 @@ var jajax = (function(){
 
         if (options.method === 'POST') {
             if (options.fileUploading === true) {
-                xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+                xhr.setRequestHeader('Content-Type', 'multipart/form-data; charset=UTF-8');
             } else {
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             }
